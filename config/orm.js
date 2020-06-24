@@ -77,6 +77,30 @@ const orm = {
             // Feed result into callback function
             cb(result);
         });
+    },
+    
+    // Updates an existing record in the specified table
+    // objColVals is an object with key value pairs representing column value pairs
+    // E.g. {burger_name: "Cheese burger", devoured: true}
+    update: (table, objColVals, condition, cb) => {
+        
+        // Use objToSqlString function to generate a string representing the objColVals object
+        const objColValsString = objToSqlString(objColVals);
+        
+        // Generate the query string
+        const queryString = `UPDATE ${table} 
+        SET ${objColValsString} 
+        WHERE ${condition};`;
+        
+        // Perform the database query using the query string
+        connection.query(queryString, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            
+            // Feed result into callback function
+            cb(result);
+        });
     }
 };
 
