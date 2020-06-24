@@ -13,7 +13,7 @@ const burger = {
             cb(res);
         });
     },
-    devour: (objColVals, condition, cb) => {
+    update: (objColVals, condition, cb) => {
         orm.update("burgers", objColVals, condition, res => {
             cb(res);
         });
