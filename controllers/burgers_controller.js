@@ -37,6 +37,8 @@ router.post("/api/burgers", (req, res) => {
 
 // Handles post request for changing the devoured property of a specified burger to 'true'
 router.put("/api/burgers/:id", (req, res) => {
+    // console.log(req.params);
+    
     const condition = `id = ${req.params.id}`;
     
     burger.update({ devoured: true }, condition, result => {
