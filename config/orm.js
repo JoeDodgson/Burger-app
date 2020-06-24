@@ -2,7 +2,7 @@
 const connection = require("connection.js");
 
 // Returns a string of a given number of question marks separated by commas ("?,?,?") for use in SQL syntax
-const questionMarksString = (num) => {
+const questionMarksString = num => {
   let str = "";
 
   if (num > 0) {
@@ -17,7 +17,7 @@ const questionMarksString = (num) => {
 };
 
 // Converts object key value pairs into string for use in SQL syntax
-const objToSqlString = (obj) => {
+const objToSqlString = obj => {
   const arr = [];
 
   // Loop through each key in obj and push the key value pair as a string int arr
@@ -41,17 +41,43 @@ const objToSqlString = (obj) => {
 
 // ORM object containing all SQL query functions
 const orm = {
-  all: (table, cb) => {
-    // Perform a query of all results of the provided table name
-    const queryString = `SELECT * FROM ${table};`;
-    connection.query(queryString, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      // Feed result into callback function
-      cb(result);
-    });
-  }
+    // Performs a query of all results of the specified table
+    all: (table, cb) => {
+
+        // Generate the query string
+        const queryString = `SELECT * FROM ${table};`;
+
+        // Perform the database query using the query string
+        connection.query(queryString, (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            // Feed result into callback function
+            cb(result);
+        });
+    },
+    
+    // Creates a new record in the specified table
+    create: (table, cols, vals, cb) => {
+        
+        // Use questionMarksString function to generate a string of question marks of the required length
+        const queryQuestionMarks = questionMarksString(vals.length);
+        
+        // Generate the query string
+        const queryString = `INSERT INTO ${table} (${cols.toString()}) 
+        VALUES (${queryQuestionMarks})`;
+        
+        // Perform the database query using the query string
+        connection.query(queryString, vals, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            
+            // Feed result into callback function
+            cb(result);
+        });
+    }
 };
 
 // Export the ORM object for use in burger.js (the model)
