@@ -7,9 +7,9 @@
         
         <div class="not-eaten-container col-6">
             <h2>Not eaten</h2>
-            {{#each burger}}
-             {{#unless devoured}}
-              <p>{{burger_name}}<span><button class="devour-button btn btn-secondary">Devour!</button></span></p>
+            {{#each burgers}}
+             {{#unless this.devoured}}
+              <p>{{this.burger_name}}<span><button data-id="{{this.id}}" class="devour-button btn btn-secondary">Devour!</button></span></p>
              {{/unless}}
             {{/each}}
 
@@ -17,9 +17,9 @@
         
         <div class="eaten-container col-6">
             <h2>Eaten</h2>
-            {{#each burger}}
-             {{#if devoured}}
-              <p>{{burger_name}}</p>
+            {{#each burgers}}
+             {{#if this.devoured}}
+              <p>{{this.burger_name}}</p>
              {{/if}}
             {{/each}}
 
