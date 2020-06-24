@@ -5,7 +5,6 @@ $(function() {
   $(".devour-button").on("click", function(event) {
     // Prevent default on the devour-button click event
     event.preventDefault();
-    event.stopPropagation();
 
     // Store the id of the burger being eaten from the data-id attribute
     const id = $(this).data("id");
@@ -15,13 +14,12 @@ $(function() {
       type: "PUT"
     }).then(
       () => {
-        console.log("Burger has been devoured");
-        // Reload the page to get the updated list
+        // Reload the page to get the updated list of burgers
         location.assign("/");
       }
     );
   });
 
   // Listener for the form submit
-  
+
 });
