@@ -9,6 +9,12 @@ var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Serve the static directory
+app.use(express.static("public"));
+
+// Link the server to the controller file for routing and handling requests
+require("controllers/burgers_controller.js")(app);
+
 // Start the server and begin listening
 app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
