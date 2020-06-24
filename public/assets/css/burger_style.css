@@ -1,0 +1,67 @@
+body {
+    background-color:#ffd867;
+    font-family: 'Roboto', sans-serif;
+}
+
+img {
+    display: block;
+    width: 25%;
+    height: auto;
+    margin: 50px auto 30px auto;
+}
+
+h1 {
+    color: rgb(204, 73, 73); 
+    text-align: center;
+}
+
+.all-burgers {
+    margin-top: 40px;
+}
+
+.eaten-container, .not-eaten-container {
+    padding: 10px;
+}
+
+.not-eaten-container {
+    text-align: right;
+    border-right: 1px dashed rgb(204, 73, 73);
+}
+
+.eaten-container p {
+    padding-left: 30px;
+    height: 30px;
+}
+
+.not-eaten-container p {
+    padding-right: 20px;
+    height: 30px;
+}
+
+.eaten-container h2 {
+    padding: 0 0 10px 50px;
+}
+
+.not-eaten-container h2 {
+    padding: 0 50px 10px 0;
+}
+
+.add-container {
+    display: block;
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+}
+
+.devour-button {
+    padding: 1px 10px;
+    margin-left: 10px;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+#burger-name-input {
+    width: 40%;
+}
