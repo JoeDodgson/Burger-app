@@ -7,23 +7,33 @@ const router = express.Router();
 // Import the model (burger.js)
 const burger = require("../models/burger.js");
 
-// Create routes (only 1 route for this application)
+// Handle routes (only 1 route for this application)
 router.get("/", (req, res) => {
 
     // Call the 'all' method from the model
     burger.all(data => {
-
+        
         // Create a handlebars object using the data returned
         const hbsObj = { burgers: data };
-
+        
         // Use the handlebars object to render the page
         res.render("index", hbsObj);
     });
 });
 
-// Post
+// Handles post request for creation of a new burger
+router.post("/api/burgers", (req, res) => {
 
-// Put
+    // Call the 'all' method from the model. Pass in name and set 'devoured' to false
+    burger.create(["burger_name", "devoured"], [req.burger_body.name, false], result => {
+
+        // If no rows were changed, return a 404 status
+        if (result.changedRows === 0) {
+            return res.status(404).end();
+        }
+        res.status(200).end();
+    });
+});
 
 // Export routes for server.js to use.
 module.exports = router;
