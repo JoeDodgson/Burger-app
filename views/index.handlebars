@@ -1,0 +1,24 @@
+    <div class="row all-burgers">
+        
+        <div class="not-eaten-container col-6">
+            <h2>Not eaten</h2>
+            {{#each burger}}
+             {{#unless devoured}}
+              <p>{{name}}<span><button class="devour-button btn btn-secondary">Devour!</button></span></p>
+             {{/unless}}
+            {{/each}}
+
+        </div>
+        
+        <div class="eaten-container col-6">
+            <h2>Eaten</h2>
+            <h2>Not eaten</h2>
+            {{#each burger}}
+             {{#if devoured}}
+              <p>{{name}}<span><button class="devour-button btn btn-secondary">Devour!</button></span></p>
+             {{/if}}
+            {{/each}}
+
+        </div>
+        
+    </div>
