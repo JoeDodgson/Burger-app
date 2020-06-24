@@ -1,5 +1,5 @@
 // Import MySQL connection.
-const connection = require("connection.js");
+const connection = require("./connection.js");
 
 // Returns a string of a given number of question marks separated by commas ("?,?,?") for use in SQL syntax
 const questionMarksString = num => {
