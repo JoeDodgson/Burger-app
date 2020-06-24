@@ -13,7 +13,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Link the server to the controller file for routing and handling requests
-require("controllers/burgers_controller.js")(app);
+const routes = require("./controllers/burgers_controller.js");
+app.use(routes);
+// require("./controllers/burgers_controller.js")(app);
 
 // Start the server and begin listening
 app.listen(PORT, function() {
