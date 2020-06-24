@@ -24,11 +24,14 @@ router.get("/", (req, res) => {
 // Handles post request for creation of a new burger
 router.post("/api/burgers", (req, res) => {
     
+    console.log(req.body);
+    
+
     // Call the 'all' method from the model. Pass in name and set 'devoured' to false
-    burger.create(["burger_name", "devoured"], [req.burger_body.name, false], result => {
+    burger.create(["burger_name", "devoured"], [req.body.name, false], result => {
         
-        // If no rows were changed, return a 404 status
-        if (result.changedRows === 0) {
+        // If no rows were affected, return a 404 status
+        if (result.affectedRows === 0) {
             return res.status(404).end();
         }
         res.status(200).end();

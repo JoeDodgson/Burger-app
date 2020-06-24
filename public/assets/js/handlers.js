@@ -15,11 +15,30 @@ $(function() {
     }).then(
       () => {
         // Reload the page to get the updated list of burgers
-        location.assign("/");
+        location.reload();
       }
     );
   });
 
   // Listener for the form submit
+  $(".create-form").on("submit", function(event) {
+    // Prevent default on the submit click event
+    event.preventDefault();
 
+    // Create an object for the new burger using the text input by the user. Trim space characters from end
+    const newBurger = {
+      name: $("#burger-name-input").val().trim()
+    };
+
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
 });
