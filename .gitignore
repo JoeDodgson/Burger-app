@@ -1,6 +1,5 @@
 package.json
 package-lock.json
 private
-config/connection.js
 node_modules
 .env
