@@ -1,22 +1,23 @@
 # Burger-app
 
+
 ## Table of contents
 
-[Description](##-description)
+[Description](##description)
 
-[Installation](##-installation)
+[Installation](##installation)
 
-[Usage](##-usage)
+[Usage](##usage)
 
-[Author](##-author)
+[Author](##author)
 
-[Contributing](##-contributing)
+[Contributing](##contributing)
 
-[License](##-license)
+[License](##license)
 
-[Tests](##-tests)
+[Tests](##tests)
 
-[Contact](##-contact)
+[Contact](##contact)
 
 
 ## Description
