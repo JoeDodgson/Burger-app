@@ -1,4 +1,4 @@
-// Wait until the DOM is fully loaded Make sure we wait to attach our handlers .
+// Wait until the DOM is fully loaded before attaching the handlers file
 $(function() {
 
   // Listener for the devour button click
@@ -30,12 +30,11 @@ $(function() {
       name: $("#burger-name-input").val().trim()
     };
 
-    // Send the POST request.
+    // Send the POST request
     $.ajax("/api/burgers", {
       type: "POST",
       data: newBurger
-    }).then(
-      function() {
+    }).then(function() {
         // Reload the page to get the updated list
         location.reload();
       }

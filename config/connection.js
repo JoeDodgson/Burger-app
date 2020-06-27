@@ -1,13 +1,14 @@
 // Require in node modules
 const mysql = require("mysql");
-
-// Require in files
 const dotenv = require("dotenv");
+
+// Set up config
 dotenv.config();
 
 // Create connection to the SQL server
 let connection;
 
+// Use JAWSDB_URL as connection URL if available, else use local connection
 if (process.env.JAWSDB_URL) {
     connection = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
