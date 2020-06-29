@@ -60,14 +60,14 @@ const orm = {
       // Feed result into callback function
       cb(result);
     }
-    
+
     catch (error) {
       console.log("ERROR - orm.js - all(): " + error);
     }
   },
     
   // Creates a new record in the specified table
-  create: (table, cols, vals, cb) => {
+  create: async (table, cols, vals, cb) => {
       
     // Use questionMarksString function to generate a string of question marks of the required length
     const queryQuestionMarks = questionMarksString(vals.length);
@@ -76,15 +76,17 @@ const orm = {
     const queryString = `INSERT INTO ${table} (${cols.toString()}) 
     VALUES (${queryQuestionMarks})`;
     
-    // Perform the database query using the query string
-    connection.query(queryString, vals, (err, result) => {
-      if (err) {
-        throw err;
-      }
-      
+    try {
+      // Perform the database query using the query string
+      const result = await queryAsync(queryString, vals)
+        
       // Feed result into callback function
       cb(result);
-    });
+    }
+
+    catch (error) {
+      console.log("ERROR - orm.js - create(): " + error);
+    }
   },
   
   // Updates an existing record in the specified table
