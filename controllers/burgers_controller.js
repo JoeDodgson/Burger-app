@@ -8,17 +8,20 @@ const router = express.Router();
 const burger = require("../models/burger.js");
 
 // Handle routes (only 1 route for this application)
-router.get("/", (req, res) => {
-
-    // Call the 'all' method from the model
-    burger.all(data => {
-        
+router.get("/", async (req, res) => {
+    try {
+        // Call the 'all' method from the model
+        const data = await burger.all();
+            
         // Create a handlebars object using the data returned
         const hbsObj = { burgers: data };
         
         // Use the handlebars object to render the page
         res.render("index", hbsObj);
-    });
+    }
+    catch (error) {
+        console.log("ERROR - burgers_controller.js - API route '/': " + error);
+    }
 });
 
 // Handles post request for creation of a new burger

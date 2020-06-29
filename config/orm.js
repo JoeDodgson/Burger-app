@@ -48,7 +48,7 @@ const objToSqlString = obj => {
 // ORM object containing all SQL query functions
 const orm = {
   // Performs a query of all results of the specified table
-  all: async (table, cb) => {
+  all: async table => {
 
     // Generate the query string
     const queryString = `SELECT * FROM ${table};`;
@@ -56,9 +56,7 @@ const orm = {
     try {
       // Perform the database query using the query string
       const result = await queryAsync(queryString);
-      
-      // Feed result into callback function
-      cb(result);
+      return result;
     }
 
     catch (error) {
