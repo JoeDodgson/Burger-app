@@ -88,7 +88,7 @@ const orm = {
   // Updates an existing record in the specified table
   // objColVals is an object with key value pairs representing column value pairs
   // E.g. {burger_name: "Cheese burger", devoured: true}
-  update: async (table, objColVals, condition, cb) => {
+  update: async (table, objColVals, condition) => {
       
     // Use objToSqlString function to generate a string representing the objColVals object
     const objColValsString = objToSqlString(objColVals);
@@ -101,9 +101,7 @@ const orm = {
     try {
       // Perform the database query using the query string
       const result = await queryAsync(queryString);
-
-      // Feed result into callback function
-      cb(result);
+      return result;
     }
     catch (error) {
       console.log("ERROR - orm.js - update(): " + error);
