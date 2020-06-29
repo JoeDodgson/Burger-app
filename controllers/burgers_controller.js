@@ -24,9 +24,6 @@ router.get("/", (req, res) => {
 // Handles post request for creation of a new burger
 router.post("/api/burgers", (req, res) => {
     
-    console.log(req.body);
-    
-
     // Call the 'all' method from the model. Pass in name and set 'devoured' to false
     burger.create(["burger_name", "devoured"], [req.body.name, false], result => {
         
@@ -40,7 +37,6 @@ router.post("/api/burgers", (req, res) => {
 
 // Handles post request for changing the devoured property of a specified burger to 'true'
 router.put("/api/burgers/:id", (req, res) => {
-    // console.log(req.params);
     
     const condition = `id = ${req.params.id}`;
     
