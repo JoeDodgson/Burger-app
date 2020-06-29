@@ -1,5 +1,11 @@
-// Import MySQL connection.
+// Import node modules
+const util = require("util");
+
+// Import MySQL connection
 const connection = require("./connection.js");
+
+// Promisify methods
+const queryAsync = util.promisify(connection.query).bind(connection);
 
 // Returns a string of a given number of question marks separated by commas ("?,?,?") for use in SQL syntax
 const questionMarksString = num => {
@@ -41,67 +47,69 @@ const objToSqlString = obj => {
 
 // ORM object containing all SQL query functions
 const orm = {
-    // Performs a query of all results of the specified table
-    all: (table, cb) => {
+  // Performs a query of all results of the specified table
+  all: async (table, cb) => {
 
-        // Generate the query string
-        const queryString = `SELECT * FROM ${table};`;
+    // Generate the query string
+    const queryString = `SELECT * FROM ${table};`;
 
-        // Perform the database query using the query string
-        connection.query(queryString, (err, result) => {
-            if (err) {
-                throw err;
-            }
-
-            // Feed result into callback function
-            cb(result);
-        });
-    },
-    
-    // Creates a new record in the specified table
-    create: (table, cols, vals, cb) => {
-        
-        // Use questionMarksString function to generate a string of question marks of the required length
-        const queryQuestionMarks = questionMarksString(vals.length);
-        
-        // Generate the query string
-        const queryString = `INSERT INTO ${table} (${cols.toString()}) 
-        VALUES (${queryQuestionMarks})`;
-        
-        // Perform the database query using the query string
-        connection.query(queryString, vals, (err, result) => {
-            if (err) {
-                throw err;
-            }
-            
-            // Feed result into callback function
-            cb(result);
-        });
-    },
-    
-    // Updates an existing record in the specified table
-    // objColVals is an object with key value pairs representing column value pairs
-    // E.g. {burger_name: "Cheese burger", devoured: true}
-    update: (table, objColVals, condition, cb) => {
-        
-        // Use objToSqlString function to generate a string representing the objColVals object
-        const objColValsString = objToSqlString(objColVals);
-        
-        // Generate the query string
-        const queryString = `UPDATE ${table} 
-        SET ${objColValsString} 
-        WHERE ${condition};`;
-        
-        // Perform the database query using the query string
-        connection.query(queryString, (err, result) => {
-            if (err) {
-                throw err;
-            }
-            
-            // Feed result into callback function
-            cb(result);
-        });
+    try {
+      // Perform the database query using the query string
+      const result = await queryAsync(queryString);
+      
+      // Feed result into callback function
+      cb(result);
     }
+    
+    catch (error) {
+      console.log("ERROR - orm.js - all(): " + error);
+    }
+  },
+    
+  // Creates a new record in the specified table
+  create: (table, cols, vals, cb) => {
+      
+    // Use questionMarksString function to generate a string of question marks of the required length
+    const queryQuestionMarks = questionMarksString(vals.length);
+    
+    // Generate the query string
+    const queryString = `INSERT INTO ${table} (${cols.toString()}) 
+    VALUES (${queryQuestionMarks})`;
+    
+    // Perform the database query using the query string
+    connection.query(queryString, vals, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      
+      // Feed result into callback function
+      cb(result);
+    });
+  },
+  
+  // Updates an existing record in the specified table
+  // objColVals is an object with key value pairs representing column value pairs
+  // E.g. {burger_name: "Cheese burger", devoured: true}
+  update: (table, objColVals, condition, cb) => {
+      
+    // Use objToSqlString function to generate a string representing the objColVals object
+    const objColValsString = objToSqlString(objColVals);
+    
+    // Generate the query string
+    const queryString = `UPDATE ${table} 
+    SET ${objColValsString} 
+    WHERE ${condition};`;
+    
+    // Perform the database query using the query string
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      
+      // Feed result into callback function
+      cb(result);
+    });
+  }
 };
 
 // Export the ORM object for use in burger.js (the model)
