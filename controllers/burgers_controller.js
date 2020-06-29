@@ -19,8 +19,10 @@ router.get("/", async (req, res) => {
         // Use the handlebars object to render the page
         res.render("index", hbsObj);
     }
+    
     catch (error) {
         console.log("ERROR - burgers_controller.js - API route '/': " + error);
+        res.status(500).json({ message: "Server error" });
     }
 });
 
@@ -32,10 +34,11 @@ router.post("/api/burgers", async (req, res) => {
         
         // If no rows were affected, return a 404 status
         if (result.affectedRows === 0) {
-            return res.status(404).end();
+            return res.status(500).json({ message: "New database entry was not made" }).end();
         }
         res.status(200).end();
     }
+    
     catch (error) {
         console.log("ERROR - burgers_controller.js - API route '/api/burgers': " + error);
     }
@@ -49,13 +52,14 @@ router.put("/api/burgers/:id", async (req, res) => {
     try {
         // Call the 'update' method from the model. Pass in Col - Vals object condition and condition string
         const result = await burger.update({ devoured: true }, condition);
-    
+        
         // If no rows were changed, return a 404 status
         if (result.changedRows === 0) {
-            return res.status(404).end();
+            return res.status(500).json({ message: "Database record was not updated" }).end();
         }
         res.status(200).end();
     }
+
     catch (error) {
         console.log("ERROR - burgers_controller.js - API route '/api/burgers/:id': " + error);
     }
