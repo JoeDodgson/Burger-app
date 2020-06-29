@@ -65,7 +65,7 @@ const orm = {
   },
     
   // Creates a new record in the specified table
-  create: async (table, cols, vals, cb) => {
+  create: async (table, cols, vals) => {
       
     // Use questionMarksString function to generate a string of question marks of the required length
     const queryQuestionMarks = questionMarksString(vals.length);
@@ -77,9 +77,7 @@ const orm = {
     try {
       // Perform the database query using the query string
       const result = await queryAsync(queryString, vals);
-        
-      // Feed result into callback function
-      cb(result);
+      return result;
     }
 
     catch (error) {

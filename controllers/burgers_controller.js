@@ -25,17 +25,20 @@ router.get("/", async (req, res) => {
 });
 
 // Handles post request for creation of a new burger
-router.post("/api/burgers", (req, res) => {
-    
-    // Call the 'all' method from the model. Pass in name and set 'devoured' to false
-    burger.create(["burger_name", "devoured"], [req.body.name, false], result => {
-        
+router.post("/api/burgers", async (req, res) => {
+    try {
+        // Call the 'create' method from the model. Pass in name and set 'devoured' to false
+        const result = await burger.create(["burger_name", "devoured"], [req.body.name, false]);
+            
         // If no rows were affected, return a 404 status
         if (result.affectedRows === 0) {
             return res.status(404).end();
         }
         res.status(200).end();
-    });
+    }
+    catch (error) {
+        console.log("ERROR - burgers_controller.js - API route '/api/burgers': " + error);
+    }
 });
 
 // Handles post request for changing the devoured property of a specified burger to 'true'
